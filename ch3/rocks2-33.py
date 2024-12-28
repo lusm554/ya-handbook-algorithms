@@ -21,18 +21,19 @@ possible_moves = [
 for mov in possible_moves:
   if mov[0] < n and mov[1] < m:
     r[mov[0]][mov[1]] = 'W'
-
 printr(r)
-exit()
 
 for i in range(1, n):
+  _n, _m = i, 0
+  print(f"{_n=} {_m=} curr={r[_n][_m]} prev={r[_n-1][_m]}")
+  '''
   if r[i-1][0] == 'W':
     r[i][0] = 'L'
   else:
     r[i][0] = 'W'
-print('fill n')
-printr(r)
-print()
+  '''
+#printr(r)
+exit()
 
 for j in range(1, m):
   if r[0][j-1] == 'W':
