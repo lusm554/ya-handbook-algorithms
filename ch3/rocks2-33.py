@@ -6,9 +6,10 @@ def printr(r):
   
 n, m = 10, 10
 r = [[' ' for _ in range(m)] for _ in range(n)]
-r[0][0] = 'L'
+r[0][0] = 'L' # default lose position
 printr(r)
 
+# set default winning positions
 possible_moves = [
   [0, 1],
   [1, 0],
