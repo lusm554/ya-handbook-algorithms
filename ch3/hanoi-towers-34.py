@@ -1,74 +1,26 @@
-#n = int(input())
-n = 3
+"""
+Головоломка <<Ханойские башни>> состоит из трёх стержней, пронумеруем их слева направо: 1, 2 и 3. Также в головоломке используется стопка дисков с отверстием посередине. Радиус дисков уменьшается снизу вверх. Изначально диски расположены на левом стержне (стержень 1), самый большой диск находится внизу. Диски в игре перемещаются по одному со стержня на стержень. Диск можно надеть на стержень, только если он пустой или верхний диск на нём большего размера, чем перемещаемый. Цель головоломки — перенести все диски со стержня 1 на стержень 3.
 
-from queue import Queue 
-bar1 = Queue()
-for x in range(1, n+1):
-	bar1.put(x)
-bar2 = Queue()
-bar3 = Queue()
-bars = [bar1, bar2, bar3]
+Требуется найти последовательность ходов, которая решает головоломку <<Ханойские башни>>.
 
-def ht(n, fr, to, steps=1):
-	if n == 1:
-		return steps
-	unused = next(b for b in bars if b.qsize() == 0)
+Формат ввода
+В первой строке задано одно число n (3≤n≤10) — количество дисков на первой башне.
+"""
+def moves_cnt(num_of_bars):
+    if num_of_bars == 1:
+        return 1
+    return 2 * moves_cnt(num_of_bars-1) + 1
 
-ht(n, fr=1, to=3)
-exit()
+def print_moves(n, fromb, tob):
+    if n == 1:
+        print(fromb, tob)
+    else:
+        free = 6 - fromb - tob
+        print_moves(n-1, fromb, free)
+        print(fromb, tob)
+        print_moves(n-1, free, tob)
 
-def ht(disk, frombar, tobar):
-	if disk == 1:
-		return
-	#unusedbar = (disk+frombar+tobar) - frombar - tobar
-	unusedbar = 6 - frombar - tobar
-	#print(f"{disk=} {frombar=} {tobar=} {unusedbar=}")
-	ht(disk-1, frombar, unusedbar)
-	ht(disk-1, unusedbar, tobar)
-
-ht(disk=n, frombar=1, tobar=3)
-
-'''
- HanoiTowers(n,fromPeg,toPeg)
-    if n = 1:
-        output “Move disk from peg fromPeg to peg toPeg”
-        return
-    unusedPeg = 6 - fromPeg - toPeg
-    HanoiTowers(n−1,fromPeg,unusedPeg)
-    output “Move disk from peg fromPeg to peg toPeg”
-    HanoiTowers(n−1,unusedPeg,toPeg)
-
-1. Сначала нужно переместить n-1 дисков на стержень посередине 2
-2. Самый большой диск n переместить на 3 стержень
-3. Переместить диски со стержня посередине 2 на 3 стержень
-'''
----
-1 3
-1 2
-3 2
----
-1 3
----
-2 1
-2 3
-1 3
-
-1 2
-1 3
-2 3
-1 2
-3 1
-3 2
-1 2
----
-1 3
----
-2 3
-2 1
-3 1
-2 3
-1 2
-1 3
-2 3
-
+n = int(input())
+print(moves_cnt(n))
+print_moves(n, 1, 3)
 
